@@ -8,6 +8,7 @@ public class CommerceSystem {
     private List<Product> products = new ArrayList<>();
     private List<Category> categories = new ArrayList<>();
     private Cart cart = new Cart();
+    private Admin admin = new Admin("qwer1234");
     public void productSystem(List<Product> products)
     {
         this.products = products;
@@ -37,6 +38,7 @@ public class CommerceSystem {
             System.out.println("[ 주문 관리 ]");
             System.out.println("4. 장바구니 확인 | 장바구니를 확인 후 주문합니다.");
             System.out.println("5. 주문 취소 | 진행중인 주문을 취소합니다.");
+            System.out.println("6. 관리자 모드");
             select = scanner.nextInt();
             switch (select){
                 case 1: {
@@ -139,6 +141,34 @@ public class CommerceSystem {
                 case 5:
                     System.out.println("장바구니를 비웁니다.");
                     cart.clearCart();
+
+                    break;
+                case 6:
+                    System.out.print("비밀번홀를 입력하세요");
+                    String pw= scanner.next();
+                    admin.login(pw);
+                    int a=3;
+                    for (int op= 0; op<3;){
+                        if (admin.login(pw)==true){
+                            admin.categorySystem(categories);
+                            admin.productSystem(products);
+                            admin.adminMenu();
+                            break;
+
+                        }else if (admin.login(pw)==false){
+                            op++;
+                            a--;
+                            if (op ==3){
+                                System.out.println("로그인 실패");
+                                System.exit(0);
+                                break;
+                            }
+                            System.out.printf("로그인 실패 다시 입력하세요(남은 기회 :%d회):",a);
+                            pw = scanner.next();
+                        }
+                        System.out.println();
+                    }
+
 
                     break;
                 case  0:

@@ -6,6 +6,8 @@ public class Product {
     private String introduce;
     private int count;
 
+
+
     public String getName(){
         return name;
     }

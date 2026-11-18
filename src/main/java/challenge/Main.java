@@ -10,6 +10,7 @@ public class Main {
        CommerceSystem commerce = new CommerceSystem();
         List<Product> products = new ArrayList<>();
         List<Category> categories = new ArrayList<>();
+        Admin pw = new Admin("qwer1234");
 
         Scanner scanner = new Scanner(System.in);
         Category electronics = new Category("전자제품");
