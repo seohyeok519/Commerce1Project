@@ -17,6 +17,15 @@ public class Cart {
 
         items.add(new CartItem(product, 1));
     }
+    // 장바구니 상품 제거
+    public void removeProduct(Product product){
+        for(CartItem item : items){
+            if (item.getProduct() == product){
+                items.remove(item);
+                break;
+            }
+        }
+    }
 
     // 장바구니 목록 조회
     public List<CartItem> getCartItems() {

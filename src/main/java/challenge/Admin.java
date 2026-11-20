@@ -10,6 +10,11 @@ public class Admin {
     List<Product> products ;
     List<Category> categories;
     int select3;
+    private Cart cart;
+
+    public void setCart(Cart cart){
+        this.cart = cart;
+    }
 
     public void categorySystem(List<Category> categories) {
         this.categories = categories;
@@ -41,18 +46,17 @@ public class Admin {
             select = scanner.nextInt();
 
             switch (select) {
-                case 1:
+                case 1: {
                     System.out.println("상품 추가");
-                    for (int i = 0; i< categories.size(); i++){
-                        Category ct =categories.get(i);
-                        System.out.printf("%d. %-15s%n",i+1, ct.getCategoryName());
+                    for (int i = 0; i < categories.size(); i++) {
+                        Category ct = categories.get(i);
+                        System.out.printf("%d. %-15s%n", i + 1, ct.getCategoryName());
                     }
                     System.out.print("추가할 상품의 카테고리: ");
                     int select1 = scanner.nextInt();
                     Category ct = categories.get(select1 - 1);
                     switch (select1) {
-                        case 1:
-                        {
+                        case 1: {
                             System.out.print("상품이름:");
                             String name = scanner.next();
                             System.out.print("가격:");
@@ -80,8 +84,8 @@ public class Admin {
                             } while ((select3 == 1) || (select3 == 2));
                             break;
                         }
-                        case 2:
-                        {
+
+                        case 2: {
                             System.out.print("상품이름:");
                             String name = scanner.next();
                             System.out.print("가격:");
@@ -109,8 +113,7 @@ public class Admin {
                             } while ((select3 == 1) || (select3 == 2));
                             break;
                         }
-                        case 3:
-                        {
+                        case 3: {
                             System.out.print("상품이름:");
                             String name = scanner.next();
                             System.out.print("가격:");
@@ -142,21 +145,78 @@ public class Admin {
                             System.out.println("잘못된 입력입니다.");
                     }
                     break;
-                case 2:
+                }
+                case 2: {
+                    scanner.nextLine();
                     System.out.print("수정할 상품의 이름을 입력하세요:");
-                    String newname = scanner.next();
-                    if (newname.equals(pd.getName()) ){
+                    String searchname = scanner.nextLine();
+                    for (Category ct : categories) {
+                        for (Product pd : ct.getProduct()) {
+                            if (searchname.trim().equals(pd.getName().trim())) {
+                                int choice;
+                                do {
+                                    System.out.println("수정할 목록을 입력하세요");
+                                    System.out.println("1. 가격");
+                                    System.out.println("2. 설명");
+                                    System.out.println("3. 재고수량");
+                                    System.out.println("0. 돌아가기");
+                                    choice = scanner.nextInt();
+
+                                    switch (choice) {
+                                        case 1:
+                                            System.out.print("수정할 가격:");
+                                            int reprice = scanner.nextInt();
+                                            pd.setPrice(reprice);
+                                            break;
+                                        case 2:
+                                            System.out.print("수정할 설명: ");
+                                            String reintro = scanner.next();
+                                            pd.setIntroduce(reintro);
+                                            break;
+                                        case 3:
+                                            System.out.println("수정할 재고: ");
+                                            int recount = scanner.nextInt();
+                                            pd.setPrice(recount);
+                                            break;
+                                        case 0:
+                                            System.out.println("뒤로 감");
+                                            break;
+                                        default:
+                                            System.out.println("잘못된 입력입니다.");
+                                    }
+                                } while (!(choice == 1) || (choice == 2) || (choice == 3) || (choice == 0));
+                            }
+
+                        }
 
                     }
                     break;
+                }
                 case 3:
-                    System.out.println("상품 삭제");
+                    scanner.nextLine();
+                    System.out.println("삭제할 상품을 입력하세요");
+                    String searchname = scanner.nextLine();
+                    for (Category ct : categories) {
+                        for (Product pd : ct.getProduct()) {
+                            if (searchname.trim().equals(pd.getName().trim())) {
+                                ct.getProduct().remove(pd);
+                                cart.removeProduct(pd);
+
+                                System.out.println("삭제되었습니다.");
+                                break;
+
+                            }
+                        }
+                    }
                     break;
                 case 4:
                     System.out.println("전체 상품 목록");
-                    for (int j = 0; j< products.size(); j++){
-                        Product pd =products.get(j);
-                        System.out.printf("%d. %-15s%n",j+1, pd.getName());
+                    for (Category ct : categories) {
+                        for (Product pd : ct.getProduct()) {
+                            System.out.println(pd.getName());
+
+                        }
+
                     }
                     break;
                 case 0:
